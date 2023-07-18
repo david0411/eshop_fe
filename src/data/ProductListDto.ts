@@ -1,4 +1,4 @@
-export interface ProductData {
+export interface ProductListDto {
     pid:       number;
     name:      string;
     price:     number;

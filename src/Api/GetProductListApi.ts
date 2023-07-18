@@ -1,12 +1,13 @@
 import axios from "axios";
-import {ProductData} from "../data/ProductData.ts";
+import {ProductListDto} from "../data/ProductListDto.ts";
 export const getProductListApi = async () =>   {
     try {
-        const apiUrl = `http://54.255.242.1:8080/public/product`
-        const response = await axios.get<ProductData>(apiUrl)
+        const apiUrl = `http://localhost:8080/public/product`
+        const response = await axios.get<ProductListDto[]>(apiUrl)
         return response.data;
     }
     catch(e)    {
         console.error(e);
+        throw e;
     }
 }

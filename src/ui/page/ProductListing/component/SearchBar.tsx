@@ -58,6 +58,7 @@ export default function SearchBar() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
+    const [searchContent, setSearchContent] = React.useState<string>('');
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -77,6 +78,10 @@ export default function SearchBar() {
 
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setMobileMoreAnchorEl(event.currentTarget);
+    };
+
+    const handleSearchInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setSearchContent(event.target.value);
     };
 
     const menuId = 'primary-search-account-menu';
@@ -120,11 +125,11 @@ export default function SearchBar() {
         >
             <MenuItem>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
+                    <Badge badgeContent={0} color="error">
                         <ShoppingCartIcon />
                     </Badge>
                 </IconButton>
-                <p>Messages</p>
+                <p>Shopping Cart</p>
             </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
@@ -143,7 +148,7 @@ export default function SearchBar() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar>
                 <Toolbar>
                     <Typography
                         variant="h6"
@@ -160,6 +165,7 @@ export default function SearchBar() {
                         <StyledInputBase
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
+                            onChange={handleSearchInput}
                         />
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />
