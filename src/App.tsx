@@ -15,7 +15,7 @@ const router = createHashRouter([
         element: <ProductListing/>
     },
     {
-        path: "/product/:productId/:userId",
+        path: "/product/:productId",
         element: <ProductDetail/>
     },
     {

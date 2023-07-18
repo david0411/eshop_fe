@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import {Grid} from "@mui/material";
-import {ProductListDto} from "../../../../data/ProductListDto.ts";
-import * as ProductListApi from "../../../../Api/GetProductListApi.ts";
+import {ProductListDto} from "../../data/ProductListDto.ts";
+import * as ProductListApi from "../../Api/GetProductListApi.ts";
 import {useEffect} from "react";
 import Loading from "./Loading.tsx";
 import ProductCard from "./ProductCard.tsx";

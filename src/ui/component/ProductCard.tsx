@@ -6,9 +6,10 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import Button, {ButtonProps} from "@mui/material/Button";
-import {ProductListDto} from "../../../../data/ProductListDto.ts";
+import {ProductListDto} from "../../data/ProductListDto.ts";
 import {styled} from "@mui/material/styles";
 import {yellow} from "@mui/material/colors";
+import {Link} from "react-router-dom";
 
 type Props = {
     data:ProductListDto
@@ -56,7 +57,9 @@ export default function ProductCard(props: Props)   {
                     </CardContent>
                     <CardActions>
                         <Box sx={{minWidth: 80, maxWidth: 100}}>
-                            <Button variant="contained">Details</Button>
+                            <Button variant="contained"
+                            component={Link}
+                            to={`/product/${props.data.pid}`}>Details</Button>
                         </Box>
                         <Box sx={{minWidth: 160, maxWidth: 200}}>
                             {add2CartButton(props.data.has_stock)}
