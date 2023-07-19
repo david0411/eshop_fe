@@ -7,15 +7,18 @@ import {ProductDetailsDto} from "../../data/ProductDetailsDto.ts";
 import * as ProductDetailsApi from "../../Api/GetProductDetailsApi.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import ProductDetailsCard from "../../ui/component/ProductDetailsCard.tsx"
-import * as mockData from "../../data/mockData.json"
+
+type Params = {
+    productId:string
+}
 
 export default function ItemDetails()   {
     const [productDetails, setProductDetails] = React.useState<ProductDetailsDto|undefined>(undefined);
     const navigate = useNavigate()
-    const { productId } = useParams()
+    const {productId } = useParams<Params>()
     const fetchProductData = async () => {
         try {
-            setProductDetails(mockData)
+            setProductDetails(await ProductDetailsApi.getProductDetailsApi(productId))
         } catch (e) {
             navigate("/error")
         }

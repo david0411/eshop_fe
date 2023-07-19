@@ -5,7 +5,7 @@ import {ProductListDto} from "../../data/ProductListDto.ts";
 import * as ProductListApi from "../../Api/GetProductListApi.ts";
 import {useEffect} from "react";
 import Loading from "./Loading.tsx";
-import ProductCard from "./ProductCard.tsx";
+import ProductListCard from "./ProductListCard.tsx";
 import {useNavigate} from "react-router-dom";
 
 
@@ -28,7 +28,7 @@ export default function ItemList() {
     const renderProductList = () => {
         if (productList)    {
             return productList.map((value) => (
-                <ProductCard key={value.pid} data={value}/>
+                <ProductListCard key={value.pid} data={value}/>
             ))
         } else  {
             return <Loading/>
