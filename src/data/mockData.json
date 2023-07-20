@@ -1,8 +1,18 @@
-{
-  "pid": 1,
-  "name": "Scarpa Drago",
-  "description": "The Drago is Scarpa's latest performance shoe.With legendary heel construction and an extended rubber cover above the toe area.The Scarpa Drago is expected to be a hit with competition climbers and boulderers.",
-  "price": 1250.00,
-  "image_url": "https://bananafingers.com/media/catalog/product/s/c/scarpa_0023_70017-000-1_dra_yel_drago_yellow_2.jpg",
-  "stock": 2
-}
+[
+  {
+    "pid": 7,
+    "name": "Moon Dust",
+    "price": 50.00,
+    "image_url": "https://bananafingers.com/media/catalog/product/m/o/moon-dust-loose-min_1.jpg",
+    "cart_quantity": 66,
+    "stock": 1970
+  },
+  {
+    "pid": 2,
+    "name": "Scarpa Booster",
+    "price": 1200.00,
+    "image_url": "https://bananafingers.com/media/catalog/product/b/o/booster_with_logo_0_4.jpg",
+    "cart_quantity": 8,
+    "stock": 20
+  }
+]

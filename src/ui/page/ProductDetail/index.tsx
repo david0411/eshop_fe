@@ -1,9 +1,9 @@
-import SearchBar from "../../component/SearchBar.tsx";
-import ItemDetails from "../../component/ItemDetails.tsx";
+import SearchBar from "../../component/SearchBar/SearchBar.tsx";
+import ProductDetails from "../../component/Product/ProductDetails.tsx";
 
 export default function ProductDetail() {
     return <>
         <SearchBar/>
-        <ItemDetails/>
+        <ProductDetails/>
         </>
 }

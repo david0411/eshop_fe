@@ -1,18 +1,18 @@
 import {Grid} from "@mui/material";
 import Box from "@mui/material/Box";
 import * as React from "react";
-import Loading from "./Loading.tsx";
-import {useEffect, useState} from "react";
-import {ProductDetailsDto} from "../../data/ProductDetailsDto.ts";
-import * as ProductDetailsApi from "../../Api/GetProductDetailsApi.tsx";
+import Loading from "../Utility/Loading.tsx";
+import {useEffect} from "react";
+import {ProductDetailsDto} from "../../../data/ProductDetailsDto.ts";
+import * as ProductDetailsApi from "../../../Api/GetProductDetailsApi.tsx";
 import {useNavigate, useParams} from "react-router-dom";
-import ProductDetailsCard from "../../ui/component/ProductDetailsCard.tsx"
+import ProductDetailsCard from "./ProductDetailsCard.tsx"
 
 type Params = {
     productId:string
 }
 
-export default function ItemDetails()   {
+export default function ProductDetails()   {
     const [productDetails, setProductDetails] = React.useState<ProductDetailsDto|undefined>(undefined);
     const navigate = useNavigate()
     const {productId } = useParams<Params>()

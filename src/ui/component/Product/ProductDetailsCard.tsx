@@ -1,4 +1,4 @@
-import {ProductDetailsDto} from "../../data/ProductDetailsDto.ts";
+import {ProductDetailsDto} from "../../../data/ProductDetailsDto.ts";
 import {Alert, Collapse, Grid, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Button, {ButtonProps} from "@mui/material/Button";
 import {styled} from "@mui/material/styles";
 import {yellow} from "@mui/material/colors";
-import * as AddCartItemApi from "../../Api/AddCartItemApi.tsx"
+import * as AddCartItemApi from "../../../Api/AddCartItemApi.tsx"
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
 

@@ -6,11 +6,11 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import Button, {ButtonProps} from "@mui/material/Button";
-import {ProductListDto} from "../../data/ProductListDto.ts";
+import {ProductListDto} from "../../../data/ProductListDto.ts";
 import {styled} from "@mui/material/styles";
 import {yellow} from "@mui/material/colors";
 import {Link} from "react-router-dom";
-import * as AddCartItemApi from "../../Api/AddCartItemApi.tsx";
+import * as AddCartItemApi from "../../../Api/AddCartItemApi.tsx";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
