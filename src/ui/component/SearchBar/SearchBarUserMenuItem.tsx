@@ -4,6 +4,8 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import {useContext} from "react";
 import {userContext} from "../../../App.tsx";
 import {useNavigate} from "react-router-dom";
+import {handleSignOut} from "../../../authService/FirebaseAuthService.ts";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 type Props = {
     handleMobileMenuClose: () => void
@@ -12,12 +14,15 @@ type Props = {
 export default function SearchBarUserMenuItem(props: Props) {
     const loginUser = useContext(userContext);
     const navigate = useNavigate();
-
+    const handleUserLogout = async () => {
+        await handleSignOut();
+        navigate('/');
+    }
     function userMenuItem() {
         if (loginUser) {
             return <MenuItem onClick={() => {
-                props.handleMobileMenuClose()
-                navigate('/profile')
+                props.handleMobileMenuClose();
+                void handleUserLogout()
             }}>
                 <IconButton
                     size="large"
@@ -26,9 +31,9 @@ export default function SearchBarUserMenuItem(props: Props) {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle/>
+                    <LogoutIcon/>
                 </IconButton>
-                <p>Profile</p>
+                <p>Logout</p>
             </MenuItem>
         } else {
             return <MenuItem onClick={() => {

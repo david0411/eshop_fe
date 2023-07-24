@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
+import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 import {Grid} from "@mui/material";
+import Box from '@mui/material/Box';
 import {ProductListDto} from "../../../data/ProductListDto.ts";
 import * as ProductListApi from "../../../Api/GetProductListApi.ts";
-import {useEffect} from "react";
-import Loading from "../Utility/Loading.tsx";
 import ProductListCard from "./ProductListCard.tsx";
-import {useNavigate} from "react-router-dom";
+import Loading from "../Utility/Loading.tsx";
 
 
 export default function ProductList() {
@@ -21,10 +21,6 @@ export default function ProductList() {
         }
     }
 
-    useEffect( () => {
-        void fetchProductData()
-    },[]);
-
     const renderProductList = () => {
         if (productList)    {
             return productList.map((value) => (
@@ -34,6 +30,10 @@ export default function ProductList() {
             return <Loading/>
         }
     }
+
+    useEffect( () => {
+        void fetchProductData()
+    },[]);
 
     return <>
         <Box height="70px"></Box>

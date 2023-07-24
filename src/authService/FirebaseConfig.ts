@@ -1,4 +1,3 @@
-import {initializeApp} from "firebase/app";
 import {FirebaseOptions} from "@firebase/app";
 
 export const firebaseConfig: FirebaseOptions = {
@@ -10,5 +9,3 @@ export const firebaseConfig: FirebaseOptions = {
     appId: "1:338419221490:web:40fce8ce0466197455216b",
     measurementId: "G-Q7Y8CRC56J"
 };
-
-const app = initializeApp(firebaseConfig);

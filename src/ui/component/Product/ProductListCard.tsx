@@ -1,18 +1,19 @@
+import * as React from "react";
+import {useNavigate} from "react-router-dom";
 import {Alert, Collapse, Grid} from "@mui/material";
+import {styled} from "@mui/material/styles";
+import {yellow} from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import * as React from "react";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import Button, {ButtonProps} from "@mui/material/Button";
-import {ProductListDto} from "../../../data/ProductListDto.ts";
-import {styled} from "@mui/material/styles";
-import {yellow} from "@mui/material/colors";
-import {Link} from "react-router-dom";
-import * as AddCartItemApi from "../../../Api/AddCartItemApi.tsx";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import {ProductListDto} from "../../../data/ProductListDto.ts";
+import * as AddCartItemApi from "../../../Api/AddCartItemApi.tsx";
+import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
 
 type Props = {
     data: ProductListDto
@@ -29,18 +30,21 @@ const ColorButton = styled(Button)<ButtonProps>(({theme}) => ({
 export default function ProductListCard(props: Props) {
     const [addCartItemStatus, setAddCartItemStatus] = React.useState<string | undefined>(undefined);
     const [messageBoxOpen, setMessageBoxOpen] = React.useState<boolean>(true);
+    const navigate = useNavigate()
     const handleAddCartItem = async () => {
+        const token = await getAccessToken()
         setAddCartItemStatus(undefined)
-        setAddCartItemStatus(await AddCartItemApi.addCartItemApi(props.data.pid.toString(), "1"))
-        setMessageBoxOpen(true)
+        if (token) {
+            const result = await AddCartItemApi.addCartItemApi(token, props.data.pid.toString(), "1")
+            if (result) {
+                setAddCartItemStatus(result.result)
+                setMessageBoxOpen(true)
+            }
+        }
     }
 
-    function add2CartButton(has_stock: boolean) {
-        if (has_stock) {
-            return <ColorButton variant="contained" onClick={handleAddCartItem}>Add to Cart</ColorButton>
-        } else {
-            return <ColorButton variant="contained" disabled>Not Available</ColorButton>
-        }
+    const handleItemDetail = () => {
+        navigate(`/product/` + props.data.pid.toString())
     }
 
     const addCartMessage = () => {
@@ -100,42 +104,54 @@ export default function ProductListCard(props: Props) {
         }
     }
 
-    return <Grid item xs={12}
-                 sm={6}
-                 md={4}
-                 display="flex"
-                 justifyContent="center"
-                 key={props.data.pid}>
-        <Box sx={{position: 'relative', minWidth: 280, maxWidth: 300, margin: 0}}>
-            {addCartMessage()}
-            <Card variant="outlined">
-                <React.Fragment>
-                    <CardContent>
-                        <Typography sx={{fontSize: 14}} color="black" gutterBottom>
-                            {props.data.name}
-                        </Typography>
-                        <Typography component="div">
-                            <img src={props.data.image_url}
-                                 alt={props.data.name}
-                                 loading="lazy"
-                                 height='120px'/>
-                        </Typography>
-                        <Typography variant="body2">
-                            ${props.data.price}
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Box sx={{minWidth: 80, maxWidth: 100}}>
-                            <Button variant="contained"
-                                    component={Link}
-                                    to={`/product/${props.data.pid}`}>Details</Button>
-                        </Box>
-                        <Box sx={{minWidth: 160, maxWidth: 200}}>
-                            {add2CartButton(props.data.has_stock)}
-                        </Box>
-                    </CardActions>
-                </React.Fragment>
-            </Card>
-        </Box>
-    </Grid>
+    function add2CartButton(has_stock: boolean) {
+        if (has_stock) {
+            return <ColorButton variant="contained" onClick={handleAddCartItem}>Add to Cart</ColorButton>
+        } else {
+            return <ColorButton variant="contained" disabled>Not Available</ColorButton>
+        }
+    }
+
+    return <>
+        <Grid item xs={12}
+              sm={6}
+              md={4}
+              display="flex"
+              justifyContent="center"
+              key={props.data.pid}
+        >
+            <Box sx={{position: 'relative', minWidth: 280, maxWidth: 300, margin: 0}}>
+                {addCartMessage()}
+                <Card variant="outlined">
+                    <React.Fragment>
+                        <CardContent>
+                            <Typography sx={{fontSize: 14}} color="black" gutterBottom>
+                                {props.data.name}
+                            </Typography>
+                            <Typography component="div">
+                                <img src={props.data.image_url}
+                                     alt={props.data.name}
+                                     loading="lazy"
+                                     height='120px'/>
+                            </Typography>
+                            <Typography variant="body2">
+                                ${props.data.price}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Box sx={{minWidth: 80, maxWidth: 100}}>
+                                <Button variant="contained"
+                                        onClick={handleItemDetail}
+                                >
+                                    Details</Button>
+                            </Box>
+                            <Box sx={{minWidth: 160, maxWidth: 200}}>
+                                {add2CartButton(props.data.has_stock)}
+                            </Box>
+                        </CardActions>
+                    </React.Fragment>
+                </Card>
+            </Box>
+        </Grid>
+    </>
 }

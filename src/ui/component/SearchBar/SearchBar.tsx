@@ -73,10 +73,11 @@ export default function SearchBar() {
         setSearchContent(event.target.value);
     };
 
+
+
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
+        <Menu anchorEl={mobileMoreAnchorEl}
             anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',

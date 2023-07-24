@@ -1,14 +1,15 @@
-import {ProductDetailsDto} from "../../../data/ProductDetailsDto.ts";
-import {Alert, Collapse, Grid, TextField} from "@mui/material";
-import Typography from "@mui/material/Typography";
 import * as React from "react";
+import {Alert, Collapse, Grid, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import Button, {ButtonProps} from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import {styled} from "@mui/material/styles";
 import {yellow} from "@mui/material/colors";
-import * as AddCartItemApi from "../../../Api/AddCartItemApi.tsx"
-import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
+import {ProductDetailsDto} from "../../../data/ProductDetailsDto.ts";
+import * as AddCartItemApi from "../../../Api/AddCartItemApi.tsx"
+import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
 
 type Props = {
     data: ProductDetailsDto
@@ -27,18 +28,16 @@ export default function ProductDetailsCard(props: Props) {
     const [addCartItemStatus, setAddCartItemStatus] = React.useState<string | undefined>(undefined);
     const [messageBoxOpen, setMessageBoxOpen] = React.useState<boolean>(true);
     const handleAddCartItem = async () => {
-        setAddCartItemStatus(await AddCartItemApi.addCartItemApi(props.data.pid.toString(), itemQty.toString()))
+        const token = await getAccessToken()
+        if (token) {
+            const result = await AddCartItemApi.addCartItemApi(token, props.data.pid.toString(), itemQty.toString())
+            if (result) {
+                setAddCartItemStatus(result.result)
+            }
+        }
     }
     const handleTextFieldChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setItemQty(Number(event.target.value));
-    }
-
-    function add2CartButton(stock: number) {
-        if (stock > 0) {
-            return <ColorButton variant="contained" onClick={handleAddCartItem}>Add to Cart</ColorButton>
-        } else {
-            return <ColorButton variant="contained" disabled>Not Available</ColorButton>
-        }
     }
 
     const addCartMessage = () => {
@@ -78,6 +77,14 @@ export default function ProductDetailsCard(props: Props) {
             )
         } else {
             return <></>
+        }
+    }
+
+    function add2CartButton(stock: number) {
+        if (stock > 0) {
+            return <ColorButton variant="contained" onClick={handleAddCartItem}>Add to Cart</ColorButton>
+        } else {
+            return <ColorButton variant="contained" disabled>Not Available</ColorButton>
         }
     }
 

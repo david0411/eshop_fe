@@ -1,46 +1,58 @@
-import {ShoppingCartListDto} from "../../../data/ShoppingCartListDto.ts";
-import Box from "@mui/material/Box";
-import {Stack} from "@mui/material";
 import * as React from "react";
-import ShoppingCartListCard from "./ShoppingCartListCard.tsx";
+import {useContext, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import {Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-
+import {userContext} from "../../../App.tsx";
+import {ShoppingCartListDto} from "../../../data/ShoppingCartListDto.ts";
+import * as GetShoppingCartListApi from "../../../Api/GetShoppingCartListApi.ts";
+import * as PrepTransApi from "../../../Api/PrepTransApi.ts";
+import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
+import ShoppingCartListCard from "./ShoppingCartListCard.tsx";
+import Loading from "../Utility/Loading.tsx";
 
 export default function ShoppingCartList() {
-    const cartItemList: ShoppingCartListDto[] = [
-        {
-            "pid": 7,
-            "name": "Moon Dust",
-            "price": 50.00,
-            "image_url": "https://bananafingers.com/media/catalog/product/m/o/moon-dust-loose-min_1.jpg",
-            "cart_quantity": 66,
-            "stock": 1970
-        },
-        {
-            "pid": 2,
-            "name": "Scarpa Booster",
-            "price": 1200.00,
-            "image_url": "https://bananafingers.com/media/catalog/product/b/o/booster_with_logo_0_4.jpg",
-            "cart_quantity": 8,
-            "stock": 20
-        }
-    ]
+    const [cartItemList, setCartItemList] = React.useState<ShoppingCartListDto[]|undefined|null>(undefined);
+    const [transId, setTransId] = React.useState<string|undefined>(undefined);
     const HKDollar = new Intl.NumberFormat('zh-HK', {
         style: 'currency',
         currency: 'HKD',
     });
+    const navigate = useNavigate();
+    const loginUser = useContext(userContext);
     let totalAmt = 0;
 
-    const handleCheckout = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const fetchCartData = async () => {
+        try {
+            const token = await getAccessToken()
+            if(token)  {
+                setCartItemList(await GetShoppingCartListApi.getShoppingCartListApi(token))
+            }
+        } catch (e) {
+            navigate("/error")
+        }
+    }
 
+    const handleCheckout = async () => {
+        const token = await getAccessToken()
+        setTransId(undefined)
+        if (token) {
+            const result = await PrepTransApi.prepTransApi(token)
+            setTransId(result.tid.toString())
+        }
     }
 
     const renderCartItemList = () => {
-        return cartItemList.map((value) => {
-            totalAmt += value.price * value.cart_quantity
-            return <ShoppingCartListCard key={value.pid} data={value}/>
-        })
+        if(cartItemList && cartItemList.length>0)  {
+            return cartItemList.map((value) => {
+                totalAmt += value.price * value.cart_quantity
+                return <ShoppingCartListCard key={value.pid} data={value} update={setCartItemList}/>
+            })
+        } else  {
+            return <Loading/>
+        }
     }
 
     const cartItemListHeader = () => {
@@ -144,6 +156,18 @@ export default function ShoppingCartList() {
         </Box>
     }
 
+    useEffect( () => {
+        setCartItemList(undefined)
+        if(loginUser){
+            void fetchCartData()
+        }   else if(loginUser===null)   {
+            navigate('/login')
+        }
+        if(transId) {
+            navigate('/checkout/'+ transId)
+        }
+    },[loginUser, transId]);
+
     return <>
         <Box height="70px"></Box>
 
@@ -156,7 +180,5 @@ export default function ShoppingCartList() {
             {cartItemListFooter()}
             {cartItemListCheckout()}
         </Stack>
-
-
         </>
 }

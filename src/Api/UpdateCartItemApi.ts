@@ -1,13 +1,13 @@
 import axios from "axios";
-import {AddCartItemDto} from "../data/AddCartItemDto.ts";
-export const addCartItemApi = async (token:string,productId: string, productQty: string) =>   {
+import {ShoppingCartListDto} from "../data/ShoppingCartListDto.ts";
+export const updateCartItemApi = async (token:string,productId: string, productQty: string) =>   {
     try {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
         if(productId)   {
             const apiUrl = `http://localhost:8080/cart/`+ productId + `/` + productQty
-            const response = await axios.put<AddCartItemDto>(apiUrl,'',config)
+            const response = await axios.patch<ShoppingCartListDto>(apiUrl,'',config)
             return response.data;
         }
     }
