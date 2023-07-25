@@ -11,8 +11,8 @@ import CardActions from "@mui/material/CardActions";
 import Button, {ButtonProps} from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import {ProductListDto} from "../../../data/ProductListDto.ts";
-import * as AddCartItemApi from "../../../Api/AddCartItemApi.tsx";
+import {ProductListDto} from "../../../data/Product/ProductListDto.ts";
+import * as AddCartItemApi from "../../../Api/Cart/AddCartItemApi.ts";
 import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
 
 type Props = {

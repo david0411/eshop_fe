@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ShoppingCartListDto} from "../data/ShoppingCartListDto.ts";
+import {CartItemListDto} from "../../data/CartItem/CartItemListDto.ts";
 export const updateCartItemApi = async (token:string,productId: string, productQty: string) =>   {
     try {
         const config = {
@@ -7,7 +7,7 @@ export const updateCartItemApi = async (token:string,productId: string, productQ
         };
         if(productId)   {
             const apiUrl = `http://localhost:8080/cart/`+ productId + `/` + productQty
-            const response = await axios.patch<ShoppingCartListDto>(apiUrl,'',config)
+            const response = await axios.patch<CartItemListDto>(apiUrl,'',config)
             return response.data;
         }
     }

@@ -13,6 +13,10 @@ import SearchBarCartButton from "./SearchBarCartButton.tsx";
 import SearchBarUserButton from "./SearchBarUserButton.tsx";
 import SearchBarCartMenuItem from "./SearchBarCartMenuItem.tsx";
 import SearchBarUserMenuItem from "./SearchBarUserMenuItem.tsx";
+import SearchBarHomeButton from "./SearchBarHomeButton.tsx";
+import SearchBarTransButton from "./SearchBarTransButton.tsx";
+import SearchBarHomeMenuItem from "./SearchBarHomeMenuItem.tsx";
+import SearchBarTransMenuItem from "./SearchBarTransMenuItem.tsx";
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -91,7 +95,9 @@ export default function SearchBar() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
+            <SearchBarHomeMenuItem handleMobileMenuClose={handleMobileMenuClose}/>
             <SearchBarCartMenuItem handleMobileMenuClose={handleMobileMenuClose}/>
+            <SearchBarTransMenuItem handleMobileMenuClose={handleMobileMenuClose}/>
             <SearchBarUserMenuItem handleMobileMenuClose={handleMobileMenuClose}/>
         </Menu>
     );
@@ -120,7 +126,9 @@ export default function SearchBar() {
                     </Search>
                     <Box sx={{flexGrow: 1}}/>
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+                        <SearchBarHomeButton/>
                         <SearchBarCartButton/>
+                        <SearchBarTransButton/>
                         <SearchBarUserButton/>
                     </Box>
                     <Box sx={{display: {xs: 'flex', md: 'none'}}}>

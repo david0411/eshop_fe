@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ShoppingCartListDto} from "../data/ShoppingCartListDto.ts";
+import {CartItemListDto} from "../../data/CartItem/CartItemListDto.ts";
 export const deleteCartItemApi = async (token:string,productId: string) =>   {
     try {
         const config = {
@@ -7,7 +7,7 @@ export const deleteCartItemApi = async (token:string,productId: string) =>   {
         };
         if(productId)   {
             const apiUrl = `http://localhost:8080/cart/`+ productId
-            const response = await axios.delete<ShoppingCartListDto>(apiUrl,config)
+            const response = await axios.delete<CartItemListDto>(apiUrl,config)
             return response.data;
         }
     }

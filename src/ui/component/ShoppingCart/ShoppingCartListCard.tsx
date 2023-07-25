@@ -1,4 +1,4 @@
-import {ShoppingCartListDto} from "../../../data/ShoppingCartListDto.ts";
+import {CartItemListDto} from "../../../data/CartItem/CartItemListDto.ts";
 import Box from "@mui/material/Box";
 import * as React from "react";
 import {TextField} from "@mui/material";
@@ -6,18 +6,18 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from "@mui/material/Typography";
 import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
-import * as UpdateCartItemApi from "../../../Api/UpdateCartItemApi.ts";
-import * as DeleteCartItemApi from "../../../Api/DeleteCartItemApi.ts";
+import * as UpdateCartItemApi from "../../../Api/Cart/UpdateCartItemApi.ts";
+import * as DeleteCartItemApi from "../../../Api/Cart/DeleteCartItemApi.ts";
 import {useNavigate} from "react-router-dom";
-import * as GetShoppingCartListApi from "../../../Api/GetShoppingCartListApi.ts";
+import * as GetShoppingCartListApi from "../../../Api/Cart/GetCartItemListApi.ts";
 
 type Props = {
-    data: ShoppingCartListDto
-    update: React.Dispatch<React.SetStateAction<ShoppingCartListDto[] | null | undefined>>
+    data: CartItemListDto
+    update: React.Dispatch<React.SetStateAction<CartItemListDto[] | null | undefined>>
 }
 
 export default function ShoppingCartListCard(props:Props)  {
-    const [cartItem, setCartItem] = React.useState<ShoppingCartListDto>(props.data)
+    const [cartItem, setCartItem] = React.useState<CartItemListDto>(props.data)
     const [itemSubtotal, setItemSubtotal] = React.useState<number>(props.data.price*props.data.cart_quantity)
     const HKDollar = new Intl.NumberFormat('zh-HK', {
         style: 'currency',
@@ -30,7 +30,7 @@ export default function ShoppingCartListCard(props:Props)  {
             props.update(undefined)
             const token = await getAccessToken()
             if(token)  {
-                props.update(await GetShoppingCartListApi.getShoppingCartListApi(token))
+                props.update(await GetShoppingCartListApi.getCartItemListApi(token))
             }
         } catch (e) {
             navigate("/error")
@@ -41,7 +41,7 @@ export default function ShoppingCartListCard(props:Props)  {
         try {
             const token = await getAccessToken()
             if (token) {
-                const updatedCartItem:ShoppingCartListDto|undefined = await UpdateCartItemApi.updateCartItemApi(token, props.data.pid.toString(), event.target.value.toString())
+                const updatedCartItem:CartItemListDto|undefined = await UpdateCartItemApi.updateCartItemApi(token, props.data.pid.toString(), event.target.value.toString())
                 if (updatedCartItem)    {
                     setCartItem(updatedCartItem)
                 }

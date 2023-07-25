@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GetTransDto} from "../data/GetTransDto.ts";
+import {GetTransDto} from "../../data/Trans/GetTransDto.ts";
 export const getTransApi = async (token:string, tid:string) =>   {
     try {
         const config = {

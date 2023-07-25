@@ -8,7 +8,7 @@ import LoginPage from "./ui/page/LoginPage";
 import Checkout from "./ui/page/Checkout";
 import ThankYou from "./ui/page/ThankYou";
 import ErrorPage from "./ui/page/ErrorPage";
-import {UserData} from "./data/UserData.ts";
+import {UserData} from "./data/User/UserData.ts";
 import * as FirebaseAuthService from "../src/authService/FirebaseAuthService.ts"
 import UserProfile from "./ui/component/User/UserProfile.tsx";
 

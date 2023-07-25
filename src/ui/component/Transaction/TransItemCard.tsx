@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {Item} from "../../../data/GetTransDto.ts";
+import {Item} from "../../../data/Trans/GetTransDto.ts";
 
 type Props = {
     data: Item

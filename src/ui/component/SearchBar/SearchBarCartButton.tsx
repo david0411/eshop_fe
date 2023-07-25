@@ -5,12 +5,12 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {useContext, useEffect} from "react";
 import {userContext} from "../../../App.tsx";
 import * as React from "react";
-import {ShoppingCartListDto} from "../../../data/ShoppingCartListDto.ts";
+import {CartItemListDto} from "../../../data/CartItem/CartItemListDto.ts";
 import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
-import * as GetShoppingCartListApi from "../../../Api/GetShoppingCartListApi.ts";
+import * as GetShoppingCartListApi from "../../../Api/Cart/GetCartItemListApi.ts";
 
 export default function SearchBarCartButton()   {
-    const [cartItemList, setCartItemList] = React.useState<ShoppingCartListDto[]|undefined|null>(undefined)
+    const [cartItemList, setCartItemList] = React.useState<CartItemListDto[]|undefined|null>(undefined)
     const loginUser = useContext(userContext)
     const navigate = useNavigate()
 
@@ -26,7 +26,7 @@ export default function SearchBarCartButton()   {
         try {
             const token = await getAccessToken()
             if(token)  {
-                setCartItemList(await GetShoppingCartListApi.getShoppingCartListApi(token))
+                setCartItemList(await GetShoppingCartListApi.getCartItemListApi(token))
             }
         } catch (e) {
             navigate("/error")

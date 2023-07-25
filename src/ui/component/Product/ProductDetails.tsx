@@ -3,8 +3,8 @@ import {useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {Grid} from "@mui/material";
 import Box from "@mui/material/Box";
-import {ProductDetailsDto} from "../../../data/ProductDetailsDto.ts";
-import * as ProductDetailsApi from "../../../Api/GetProductDetailsApi.tsx";
+import {ProductDetailsDto} from "../../../data/Product/ProductDetailsDto.ts";
+import * as ProductDetailsApi from "../../../Api/Product/GetProductDetailsApi.ts";
 import ProductDetailsCard from "./ProductDetailsCard.tsx"
 import Loading from "../Utility/Loading.tsx";
 

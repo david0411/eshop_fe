@@ -7,7 +7,7 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup, signOut
 } from "firebase/auth";
-import {UserData} from "../data/UserData";
+import {UserData} from "../data/User/UserData.ts";
     export const serviceInit = () => {
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional

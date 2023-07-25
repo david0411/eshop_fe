@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ProductDetailsDto} from "../data/ProductDetailsDto.ts";
+import {ProductDetailsDto} from "../../data/Product/ProductDetailsDto.ts";
 export const getProductDetailsApi = async (productId: string | undefined) =>   {
     try {
         if(productId)   {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ProductListDto} from "../data/ProductListDto.ts";
+import {ProductListDto} from "../../data/Product/ProductListDto.ts";
 export const getProductListApi = async () =>   {
     try {
         const apiUrl = `http://localhost:8080/public/product`

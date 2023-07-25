@@ -22,7 +22,7 @@ export default function SearchBarCartMenuItem(props: Props) {
             }}>
                 <IconButton
                     size="large"
-                    aria-label="show 4 new mails"
+                    aria-label="cart"
                     color="inherit">
                     <Badge badgeContent={0} color="error">
                         <ShoppingCartIcon/>

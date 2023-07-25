@@ -1,14 +1,16 @@
 import React, {useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {FormLabel, Input, Stack} from "@mui/material";
+import {Backdrop, CircularProgress, FormLabel, Input, Stack} from "@mui/material";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
-import {GetTransDto} from "../../../data/GetTransDto.ts"
-import * as GetTransApi from "../../../Api/GetTransApi.ts"
+import {GetTransDto} from "../../../data/Trans/GetTransDto.ts"
+import * as GetTransApi from "../../../Api/Transaction/GetTransApi.ts"
+import * as PayTransApi from "../../../Api/Transaction/PayTransApi.ts"
+import * as FinishTransApi from "../../../Api/Transaction/FinishTransApi.ts"
 import TransItemCard from "./TransItemCard.tsx";
 import Loading from "../Utility/Loading.tsx";
-import Button from "@mui/material/Button";
 
 type Params = {
     transactionId:string
@@ -18,14 +20,15 @@ export default function TransactionDetail() {
     const [transData, setTransData] = React.useState<GetTransDto|undefined>(undefined);
     const [cardNo, setCardNo] = React.useState<number|undefined>(undefined)
     const [expDate, setExpDate] = React.useState<Date|undefined>(undefined)
+    const [payStatus, setPayStatus] = React.useState<string|undefined>(undefined)
     const [cvv, setCvv] = React.useState<number|undefined>(undefined)
+    const [loadingBackdrop, setLoadingBackdrop] = React.useState<boolean>(false);
     const navigate = useNavigate();
     const {transactionId} = useParams<Params>();
 
     const fetchTransData = async () => {
         try {
             const token = await getAccessToken()
-            console.log(transactionId)
             if(token && transactionId)  {
                 setTransData(await GetTransApi.getTransApi(token, transactionId))
             }
@@ -115,9 +118,33 @@ export default function TransactionDetail() {
     const handleCVVInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setCvv(Number(event.target.value))
     }
-    const handleSubmitPayment = () => {
-        navigate('/thankyou')
+    const handleSubmitPayment = async () => {
+        setLoadingBackdrop(true)
+        const token = await getAccessToken()
+        if(token && transactionId)   {
+            const payResult = await PayTransApi.payTransApi(token,transactionId)
+            setPayStatus(payResult.result)
+
+        }
     }
+
+    const handlePaymentSuccess = async () => {
+        const token = await getAccessToken()
+        if(token && transactionId)   {
+            const payResult = await FinishTransApi.finishTransApi(token,transactionId)
+            setPayStatus(payResult.status)
+            setLoadingBackdrop(false)
+            navigate('/thankyou')
+        }
+    }
+
+    useEffect(()=> {
+        if(payStatus==='SUCCESS')   {
+            void handlePaymentSuccess()
+        }
+        setTransData(undefined)
+        void fetchTransData()
+    },[])
 
     const transFooter = () => {
         return <>
@@ -171,12 +198,8 @@ export default function TransactionDetail() {
                 </form>
             </Box>
         </>
-    }
 
-    useEffect(()=> {
-        setTransData(undefined)
-        void fetchTransData()
-    },[])
+    }
 
     return  <>
         <Box height="70px"></Box>
@@ -189,5 +212,11 @@ export default function TransactionDetail() {
             {renderTransItemList()}
             {transFooter()}
         </Stack>
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loadingBackdrop}
+        >
+            <CircularProgress color="inherit" />
+        </Backdrop>
     </>
 }

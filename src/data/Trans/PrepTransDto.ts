@@ -1,4 +1,4 @@
-export interface PrepareTransDto {
+export interface PrepTransDto {
     tid:       number;
     datetime:  Date;
     status:    string;

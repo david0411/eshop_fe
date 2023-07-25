@@ -1,4 +1,4 @@
-export interface ShoppingCartListDto {
+export interface CartItemListDto {
   pid:           number;
   name:          string;
   price:         number;

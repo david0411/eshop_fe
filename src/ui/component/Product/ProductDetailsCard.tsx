@@ -7,8 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import {styled} from "@mui/material/styles";
 import {yellow} from "@mui/material/colors";
 import CloseIcon from '@mui/icons-material/Close';
-import {ProductDetailsDto} from "../../../data/ProductDetailsDto.ts";
-import * as AddCartItemApi from "../../../Api/AddCartItemApi.tsx"
+import {ProductDetailsDto} from "../../../data/Product/ProductDetailsDto.ts";
+import * as AddCartItemApi from "../../../Api/Cart/AddCartItemApi.ts"
 import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
 
 type Props = {

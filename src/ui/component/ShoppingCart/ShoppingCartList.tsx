@@ -1,21 +1,22 @@
 import * as React from "react";
 import {useContext, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {Stack} from "@mui/material";
+import {Backdrop, CircularProgress, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {userContext} from "../../../App.tsx";
-import {ShoppingCartListDto} from "../../../data/ShoppingCartListDto.ts";
-import * as GetShoppingCartListApi from "../../../Api/GetShoppingCartListApi.ts";
-import * as PrepTransApi from "../../../Api/PrepTransApi.ts";
+import {CartItemListDto} from "../../../data/CartItem/CartItemListDto.ts";
+import * as GetShoppingCartListApi from "../../../Api/Cart/GetCartItemListApi.ts";
+import * as PrepTransApi from "../../../Api/Transaction/PrepTransApi.ts";
 import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
 import ShoppingCartListCard from "./ShoppingCartListCard.tsx";
 import Loading from "../Utility/Loading.tsx";
 
 export default function ShoppingCartList() {
-    const [cartItemList, setCartItemList] = React.useState<ShoppingCartListDto[]|undefined|null>(undefined);
+    const [cartItemList, setCartItemList] = React.useState<CartItemListDto[]|undefined|null>(undefined);
     const [transId, setTransId] = React.useState<string|undefined>(undefined);
+    const [loadingBackdrop, setLoadingBackdrop] = React.useState<boolean>(false);
     const HKDollar = new Intl.NumberFormat('zh-HK', {
         style: 'currency',
         currency: 'HKD',
@@ -28,7 +29,7 @@ export default function ShoppingCartList() {
         try {
             const token = await getAccessToken()
             if(token)  {
-                setCartItemList(await GetShoppingCartListApi.getShoppingCartListApi(token))
+                setCartItemList(await GetShoppingCartListApi.getCartItemListApi(token))
             }
         } catch (e) {
             navigate("/error")
@@ -36,11 +37,13 @@ export default function ShoppingCartList() {
     }
 
     const handleCheckout = async () => {
+        setLoadingBackdrop(true)
         const token = await getAccessToken()
         setTransId(undefined)
         if (token) {
             const result = await PrepTransApi.prepTransApi(token)
             setTransId(result.tid.toString())
+            setLoadingBackdrop(false)
         }
     }
 
@@ -180,5 +183,11 @@ export default function ShoppingCartList() {
             {cartItemListFooter()}
             {cartItemListCheckout()}
         </Stack>
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loadingBackdrop}
+        >
+            <CircularProgress color="inherit" />
+        </Backdrop>
         </>
 }
