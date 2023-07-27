@@ -7,8 +7,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {userContext} from "../../../App.tsx";
 import {CartItemListDto} from "../../../data/CartItem/CartItemListDto.ts";
-import * as GetShoppingCartListApi from "../../../Api/Cart/GetCartItemListApi.ts";
-import * as PrepTransApi from "../../../Api/Transaction/PrepTransApi.ts";
+import * as CartApi from "../../../Api/Cart/CartApi.ts";
+import * as TransApi from "../../../Api/Transaction/TransApi.ts";
 import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
 import ShoppingCartListCard from "./ShoppingCartListCard.tsx";
 import Loading from "../Utility/Loading.tsx";
@@ -29,7 +29,7 @@ export default function ShoppingCartList() {
         try {
             const token = await getAccessToken()
             if(token)  {
-                setCartItemList(await GetShoppingCartListApi.getCartItemListApi(token))
+                setCartItemList(await CartApi.getCartItemListApi(token))
             }
         } catch (e) {
             navigate("/error")
@@ -41,7 +41,7 @@ export default function ShoppingCartList() {
         const token = await getAccessToken()
         setTransId(undefined)
         if (token) {
-            const result = await PrepTransApi.prepTransApi(token)
+            const result = await TransApi.prepTransApi(token)
             setTransId(result.tid.toString())
             setLoadingBackdrop(false)
         }

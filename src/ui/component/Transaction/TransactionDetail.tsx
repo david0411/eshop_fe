@@ -6,9 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
 import {GetTransDto} from "../../../data/Trans/GetTransDto.ts"
-import * as GetTransApi from "../../../Api/Transaction/GetTransApi.ts"
-import * as PayTransApi from "../../../Api/Transaction/PayTransApi.ts"
-import * as FinishTransApi from "../../../Api/Transaction/FinishTransApi.ts"
+import * as TransApi from "../../../Api/Transaction/TransApi.ts"
 import TransItemCard from "./TransItemCard.tsx";
 import Loading from "../Utility/Loading.tsx";
 
@@ -30,7 +28,7 @@ export default function TransactionDetail() {
         try {
             const token = await getAccessToken()
             if(token && transactionId)  {
-                setTransData(await GetTransApi.getTransApi(token, transactionId))
+                setTransData(await TransApi.getTransApi(token, transactionId))
             }
         } catch (e) {
             navigate("/error")
@@ -112,6 +110,8 @@ export default function TransactionDetail() {
     }
 
     const handleExpDateInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         setExpDate(event.target.value)
     }
 
@@ -122,7 +122,7 @@ export default function TransactionDetail() {
         setLoadingBackdrop(true)
         const token = await getAccessToken()
         if(token && transactionId)   {
-            const payResult = await PayTransApi.payTransApi(token,transactionId)
+            const payResult = await TransApi.payTransApi(token,transactionId)
             setPayStatus(payResult.result)
 
         }
@@ -131,7 +131,7 @@ export default function TransactionDetail() {
     const handlePaymentSuccess = async () => {
         const token = await getAccessToken()
         if(token && transactionId)   {
-            const payResult = await FinishTransApi.finishTransApi(token,transactionId)
+            const payResult = await TransApi.finishTransApi(token,transactionId)
             setPayStatus(payResult.status)
             setLoadingBackdrop(false)
             navigate('/thankyou')
@@ -156,6 +156,7 @@ export default function TransactionDetail() {
                 flexDirection: 'column',
                 alignItems: 'center'
             }}>
+                {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
                 <form id="login" onSubmit={handleSubmitPayment}>
                     <FormLabel>
                         <Typography>

@@ -12,7 +12,7 @@ import Button, {ButtonProps} from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import {ProductListDto} from "../../../data/Product/ProductListDto.ts";
-import * as AddCartItemApi from "../../../Api/Cart/AddCartItemApi.ts";
+import * as CartApi from "../../../Api/Cart/CartApi.ts";
 import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
 
 type Props = {
@@ -35,7 +35,7 @@ export default function ProductListCard(props: Props) {
         const token = await getAccessToken()
         setAddCartItemStatus(undefined)
         if (token) {
-            const result = await AddCartItemApi.addCartItemApi(token, props.data.pid.toString(), "1")
+            const result = await CartApi.addCartItemApi(token, props.data.pid.toString(), "1")
             if (result) {
                 setAddCartItemStatus(result.result)
                 setMessageBoxOpen(true)

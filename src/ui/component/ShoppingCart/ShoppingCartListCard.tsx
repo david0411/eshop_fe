@@ -6,10 +6,8 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from "@mui/material/Typography";
 import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
-import * as UpdateCartItemApi from "../../../Api/Cart/UpdateCartItemApi.ts";
-import * as DeleteCartItemApi from "../../../Api/Cart/DeleteCartItemApi.ts";
+import * as CartApi from "../../../Api/Cart/CartApi.ts";
 import {useNavigate} from "react-router-dom";
-import * as GetShoppingCartListApi from "../../../Api/Cart/GetCartItemListApi.ts";
 
 type Props = {
     data: CartItemListDto
@@ -30,7 +28,7 @@ export default function ShoppingCartListCard(props:Props)  {
             props.update(undefined)
             const token = await getAccessToken()
             if(token)  {
-                props.update(await GetShoppingCartListApi.getCartItemListApi(token))
+                props.update(await CartApi.getCartItemListApi(token))
             }
         } catch (e) {
             navigate("/error")
@@ -41,7 +39,7 @@ export default function ShoppingCartListCard(props:Props)  {
         try {
             const token = await getAccessToken()
             if (token) {
-                const updatedCartItem:CartItemListDto|undefined = await UpdateCartItemApi.updateCartItemApi(token, props.data.pid.toString(), event.target.value.toString())
+                const updatedCartItem:CartItemListDto|undefined = await CartApi.updateCartItemApi(token, props.data.pid.toString(), event.target.value.toString())
                 if (updatedCartItem)    {
                     setCartItem(updatedCartItem)
                 }
@@ -58,7 +56,7 @@ export default function ShoppingCartListCard(props:Props)  {
         try {
             const token = await getAccessToken()
             if (token) {
-                await DeleteCartItemApi.deleteCartItemApi(token, props.data.pid.toString());
+                await CartApi.deleteCartItemApi(token, props.data.pid.toString());
                 await fetchCartData()
             }
         } catch (e) {

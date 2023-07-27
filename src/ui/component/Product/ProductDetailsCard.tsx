@@ -8,7 +8,7 @@ import {styled} from "@mui/material/styles";
 import {yellow} from "@mui/material/colors";
 import CloseIcon from '@mui/icons-material/Close';
 import {ProductDetailsDto} from "../../../data/Product/ProductDetailsDto.ts";
-import * as AddCartItemApi from "../../../Api/Cart/AddCartItemApi.ts"
+import * as CartApi from "../../../Api/Cart/CartApi.ts"
 import {getAccessToken} from "../../../authService/FirebaseAuthService.ts";
 
 type Props = {
@@ -30,7 +30,7 @@ export default function ProductDetailsCard(props: Props) {
     const handleAddCartItem = async () => {
         const token = await getAccessToken()
         if (token) {
-            const result = await AddCartItemApi.addCartItemApi(token, props.data.pid.toString(), itemQty.toString())
+            const result = await CartApi.addCartItemApi(token, props.data.pid.toString(), itemQty.toString())
             if (result) {
                 setAddCartItemStatus(result.result)
             }

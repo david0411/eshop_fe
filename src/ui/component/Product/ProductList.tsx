@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {Grid} from "@mui/material";
 import Box from '@mui/material/Box';
 import {ProductListDto} from "../../../data/Product/ProductListDto.ts";
-import * as ProductListApi from "../../../Api/Product/GetProductListApi.ts";
+import * as ProductApi from "../../../Api/Product/ProductApi.ts";
 import ProductListCard from "./ProductListCard.tsx";
 import Loading from "../Utility/Loading.tsx";
 
@@ -15,7 +15,7 @@ export default function ProductList() {
 
     const fetchProductData = async () => {
         try {
-            setProductList(await ProductListApi.getProductListApi())
+            setProductList(await ProductApi.getProductListApi())
         } catch (e) {
             navigate("/error")
         }

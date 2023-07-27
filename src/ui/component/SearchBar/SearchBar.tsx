@@ -16,7 +16,7 @@ import SearchBarUserMenuItem from "./SearchBarUserMenuItem.tsx";
 import SearchBarHomeButton from "./SearchBarHomeButton.tsx";
 import SearchBarTransButton from "./SearchBarTransButton.tsx";
 import SearchBarHomeMenuItem from "./SearchBarHomeMenuItem.tsx";
-import SearchBarTransMenuItem from "./SearchBarTransMenuItem.tsx";
+// import SearchBarTransMenuItem from "./SearchBarTransMenuItem.tsx";
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -61,7 +61,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 export default function SearchBar() {
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
-    const [searchContent, setSearchContent] = React.useState<string>('');
+    // const [searchContent, setSearchContent] = React.useState<string>('');
 
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -73,9 +73,9 @@ export default function SearchBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
-    const handleSearchInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setSearchContent(event.target.value);
-    };
+    // const handleSearchInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    //     setSearchContent(event.target.value);
+    // };
 
 
 
@@ -97,7 +97,7 @@ export default function SearchBar() {
         >
             <SearchBarHomeMenuItem handleMobileMenuClose={handleMobileMenuClose}/>
             <SearchBarCartMenuItem handleMobileMenuClose={handleMobileMenuClose}/>
-            <SearchBarTransMenuItem handleMobileMenuClose={handleMobileMenuClose}/>
+            {/*<SearchBarTransMenuItem handleMobileMenuClose={handleMobileMenuClose}/>*/}
             <SearchBarUserMenuItem handleMobileMenuClose={handleMobileMenuClose}/>
         </Menu>
     );
@@ -121,7 +121,7 @@ export default function SearchBar() {
                         <StyledInputBase
                             placeholder="Search…"
                             inputProps={{'aria-label': 'search'}}
-                            onChange={handleSearchInput}
+                            // onChange={handleSearchInput}
                         />
                     </Search>
                     <Box sx={{flexGrow: 1}}/>

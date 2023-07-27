@@ -4,7 +4,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Grid} from "@mui/material";
 import Box from "@mui/material/Box";
 import {ProductDetailsDto} from "../../../data/Product/ProductDetailsDto.ts";
-import * as ProductDetailsApi from "../../../Api/Product/GetProductDetailsApi.ts";
+import * as ProductApi from "../../../Api/Product/ProductApi.ts";
 import ProductDetailsCard from "./ProductDetailsCard.tsx"
 import Loading from "../Utility/Loading.tsx";
 
@@ -18,7 +18,7 @@ export default function ProductDetails() {
     const {productId} = useParams<Params>()
     const fetchProductData = async () => {
         try {
-            setProductDetails(await ProductDetailsApi.getProductDetailsApi(productId))
+            setProductDetails(await ProductApi.getProductDetailsApi(productId))
         } catch (e) {
             navigate("/error")
         }

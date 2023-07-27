@@ -1,5 +1,5 @@
 import {initializeApp} from "firebase/app";
-import {firebaseConfig} from "./FirebaseConfig.ts";
+import {firebaseConfig} from "../Config/FirebaseConfig.ts";
 import {
     getAuth,
     GoogleAuthProvider,
