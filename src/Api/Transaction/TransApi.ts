@@ -11,7 +11,7 @@ export const prepTransApi = async (token:string) =>   {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        const apiUrl = baseUrl + `transaction/prepare`
+        const apiUrl = baseUrl + `/transaction/prepare`
         const response = await axios.post<PrepTransDto>(apiUrl,'',config)
         return response.data;
     }
@@ -26,7 +26,7 @@ export const payTransApi = async (token:string, tid:string) =>   {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        const apiUrl = baseUrl + `transaction/`+ tid + `/pay`
+        const apiUrl = baseUrl + `/transaction/`+ tid + `/pay`
         const response = await axios.patch<PayTransDto>(apiUrl,'',config)
         return response.data;
     }
@@ -41,7 +41,7 @@ export const getTransApi = async (token:string, tid:string) =>   {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        const apiUrl = baseUrl + `transaction/` + tid
+        const apiUrl = baseUrl + `/transaction/` + tid
         const response = await axios.get<GetTransDto>(apiUrl,config)
         return response.data;
     }
@@ -56,7 +56,7 @@ export const finishTransApi = async (token:string, tid:string) =>   {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        const apiUrl = baseUrl + `transaction/`+ tid + `/finish`
+        const apiUrl = baseUrl + `/transaction/`+ tid + `/finish`
         const response = await axios.patch<FinishTransDto>(apiUrl,'',config)
         return response.data;
     }

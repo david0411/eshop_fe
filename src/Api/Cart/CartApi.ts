@@ -10,7 +10,7 @@ export const addCartItemApi = async (token:string,productId: string, productQty:
             headers: { Authorization: `Bearer ${token}` }
         };
         if(productId)   {
-            const apiUrl = baseUrl + `cart/` + productId + `/` + productQty
+            const apiUrl = baseUrl + `/cart/` + productId + `/` + productQty
             const response = await axios.put<AddCartItemDto>(apiUrl,'',config)
             return response.data;
         }
@@ -27,7 +27,7 @@ export const deleteCartItemApi = async (token:string,productId: string) =>   {
             headers: { Authorization: `Bearer ${token}` }
         };
         if(productId)   {
-            const apiUrl = baseUrl + `cart/`+ productId
+            const apiUrl = baseUrl + `/cart/`+ productId
             const response = await axios.delete<CartItemListDto>(apiUrl,config)
             return response.data;
         }
@@ -43,7 +43,7 @@ export const getCartItemListApi = async (token:string) =>   {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        const apiUrl = baseUrl + `cart`
+        const apiUrl = baseUrl + `/cart`
         const response = await axios.get<CartItemListDto[]>(apiUrl,config)
         return response.data;
     }
@@ -59,7 +59,7 @@ export const updateCartItemApi = async (token:string,productId: string, productQ
             headers: { Authorization: `Bearer ${token}` }
         };
         if(productId)   {
-            const apiUrl = baseUrl + `cart/`+ productId + `/` + productQty
+            const apiUrl = baseUrl + `/cart/`+ productId + `/` + productQty
             const response = await axios.patch<CartItemListDto>(apiUrl,'',config)
             return response.data;
         }
